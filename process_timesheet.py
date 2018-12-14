@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
 import argparse
 import calendar
 import os
 import subprocess
+from datetime import datetime, timedelta
 
 MAX_HOURS_PER_WEEK = 35
 MEAN_HOURS_PER_DAY = MAX_HOURS_PER_WEEK / 5

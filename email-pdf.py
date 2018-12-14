@@ -4,11 +4,11 @@
 import argparse
 import os
 import smtplib
+from email import encoders
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
-import email
+
 
 def main():
     parser = argparse.ArgumentParser()
