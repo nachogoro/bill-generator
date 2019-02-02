@@ -186,7 +186,7 @@ def generate_pdf(
         'CURRENTINVOICENUMBER': '%02d/%04d' % (target_month.month, target_month.year),
         'CURRENTMONTH': target_month.strftime('%B'),
         'CURRENTYEAR': target_month.strftime('%Y'),
-        'WORKEDHOURS': '%.1f' % float(worked_hours),
+        'WORKEDHOURS': '%.2f' % float(worked_hours),
         'HOURLYRATE': str(hourly_rate),
         'TOTALAMOUNT': '%.2f' % float(worked_hours*hourly_rate)
     }
