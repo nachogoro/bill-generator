@@ -166,8 +166,13 @@ def generate_useful_information(output_file, hours_per_day, target_month):
         print(file=dst)
 
 
-def generate_pdf(latex_template, target_month, worked_hours, hourly_rate):
-    tex_name = '%s - Invoice.tex' % target_month.strftime('%y.%m')
+def generate_pdf(
+    latex_template, target_month, worked_hours, hourly_rate, output_dir):
+
+    tex_name = os.path.join(
+        output_dir,
+        '%s - Invoice.tex' % target_month.strftime('%y.%m'))
+
     _, last_day_of_the_month = calendar.monthrange(target_month.year,
                                                    target_month.month)
 
@@ -195,13 +200,15 @@ def generate_pdf(latex_template, target_month, worked_hours, hourly_rate):
         dst.write(filedata)
 
     # Generate the pdf
-    subprocess.call(['pdflatex', '-interaction=nonstopmode', tex_name],
-            stdout=subprocess.PIPE)
+    subprocess.call(
+        ['pdflatex', '-output-directory', output_dir,
+         '-interaction=nonstopmode', tex_name],
+        stdout=subprocess.PIPE)
 
     # Remove every file related to the bill except the .pdf
-    tex_name_no_ext,_ = os.path.splitext(tex_name)
-    for file_in_dir in os.listdir():
-        file_name_no_ext, file_ext = os.path.splitext(file_in_dir)
+    tex_name_no_ext,_ = os.path.splitext(os.path.basename(tex_name))
+    for file_in_dir in [os.path.join(output_dir, f) for f in os.listdir(output_dir)]:
+        file_name_no_ext, file_ext = os.path.splitext(os.path.basename(file_in_dir))
         if file_name_no_ext == tex_name_no_ext and file_ext != '.pdf':
             os.remove(file_in_dir)
 
@@ -219,7 +226,6 @@ def main():
                         action='store')
     parser.add_argument('--rate', help='Hourly rate in pounds',
                         type=int,
-                        default=12,
                         action='store')
     parser.add_argument('--stats', help='Output file with stats',
                         type=str,
@@ -230,6 +236,11 @@ def main():
                         type=str,
                         default='billing_template.tex',
                         action='store')
+    parser.add_argument('--output_directory',
+                        help='Directory to place the output files',
+                        type=str,
+                        default='.',
+                        action='store')
     args = parser.parse_args()
 
     target_month = datetime.strptime(args.month, '%m/%Y')
@@ -239,10 +250,14 @@ def main():
     total_of_hours_in_month = sum(
         [h for d,h in hours_per_day.items() if d.month == target_month.month])
 
-    generate_useful_information(args.stats, hours_per_day, target_month)
+    generate_useful_information(
+        os.path.join(args.output_directory, args.stats),
+        hours_per_day,
+        target_month)
 
     generate_pdf(
-        args.latex_template, target_month, total_of_hours_in_month, args.rate)
+        args.latex_template, target_month, total_of_hours_in_month, args.rate,
+        args.output_directory)
 
 
 if __name__ == '__main__':

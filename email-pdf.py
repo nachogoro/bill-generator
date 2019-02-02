@@ -23,8 +23,16 @@ def main():
                         default='your-receiver-addr@gmail.com',
                         action='store')
 
-    parser.add_argument('--attachment', help='File to be attached',
-                        type=str, action='store')
+    parser.add_argument('--attachment',
+                        help='File to be attached',
+                        type=str,
+                        action='store')
+
+    parser.add_argument('--subject',
+                        help='Subject of the e-mail',
+                        type=str,
+                        default='',
+                        action='store')
 
     parser.add_argument('body', help='File containing the body of the message',
                         type=str)
@@ -44,7 +52,7 @@ def main():
     msg['To'] = args.toaddr
 
     # storing the subject
-    msg['Subject'] = 'Invoice for current month'
+    msg['Subject'] = args.subject
 
     # attach the body with the msg instance
     msg.attach(MIMEText(body, 'plain', 'UTF-8'))
