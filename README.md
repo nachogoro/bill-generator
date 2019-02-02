@@ -29,6 +29,8 @@ Before using the tool, modify the following strings in the corresponding files:
   `generate-and-email-bill.sh` to the address where e-mails must be sent.
 * `INSERT-PASSWORD-HERE` in `email-pdf.py` to the password of the default
   sender address.
+* `MY-WORKING-DIRECTORY` in `generate-and-email-bill.sh` to the directory
+  containing the scripts.
 * `DOWNLOAD-LINK` in `generate-and-email-bill.sh` to the URL containing the
   .xlsx file with the logged hours.
 * `HOURLY-RATE` in `generate-and-email-bill.sh` to the hourly rate for your
