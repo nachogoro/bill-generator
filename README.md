@@ -39,7 +39,7 @@ Before using the tool, modify the following strings in the corresponding files:
 Once that is done, simply run:
 `./generate-and-email-bill.sh`
 
-This works best as a daily contrab entry.
+This works best as a daily crontab entry.
 
 ## Dependencies
 This project requires libreoffice with a European date locale for appropriate conversion from .xlsx to .csv.
