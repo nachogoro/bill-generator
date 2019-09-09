@@ -51,7 +51,7 @@ if [ "$?" -eq 0 ]; then
         --fromaddr your-from-addr@gmail.com \
         --toaddr your-receiver-addr@gmail.com \
         --attachment "${INVOICE}" \
-        --subject "Invoice for ${MONTHS_WORD[${MONTH}]}, ${YEAR}" \
+        --subject "Invoice for ${MONTHS_WORD[10#${MONTH}]}, ${YEAR}" \
         "${STATS_FILE}"
 else
     echo "Not sending e-mail (today is ${TODAY})"
